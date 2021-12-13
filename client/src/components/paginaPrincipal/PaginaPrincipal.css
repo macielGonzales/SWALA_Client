@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* height: 100%; */
+}
+
+.grid-container >* {
+    box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 4px;
+    padding: 10px;
+    text-align:center;
+    height: 100%
+}
+
+.header {
+    grid-area: header;
+    background-color: white
+}
+
+.navbar1 {
+    grid-area: navbar1;
+    background-color: white;
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    
+}
+.box_contacto{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: cadetblue;
+}
+
+.box_email{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(3, 51, 53);
+}
+
+.box_telefono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(51, 60, 112);
+}
+ ul li {
+    display: inline-block;
+    opacity: 0.7;
+    padding: 0 20px;
+}
+
+ ul li:hover {
+    opacity: 1;
+}
+.navbar2 {
+    grid-area: navbar2;
+    background-color: white;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    background-color: white;
+}
+
+.main {
+    grid-area: main;
+    background-color: white;
+}
+
+.footer {
+    grid-area: footer;
+    background-color:white;
+}
+
+.grid-container {
+    display: grid;
+    gap: 5px;
+    height: 100%;
+    min-height: 100%;
+    grid-template-areas: 
+       "navbar1"
+       "header"
+       "navbar2"
+       "main"
+       "sidebar"
+       "footer";
+    grid-template:
+        "navbar1 navbar1" 50px
+        "header header" 100px
+        "navbar2 navbar2" 50px
+        "sidebar main" auto
+        "footer footer" 100px /
+        200px    auto;
+
+}

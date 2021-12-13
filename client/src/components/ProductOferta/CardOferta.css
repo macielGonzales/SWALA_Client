@@ -1,0 +1,24 @@
+.button-obtener-codigo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .oferta {
+    position: absolute;
+    font-size: 500%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.568);
+    width: 100%;
+    color: white;
+    top: 20%;
+    left: 0%;
+  }
+  
+  
+  
+  
+  
+  
