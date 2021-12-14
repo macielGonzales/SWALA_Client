@@ -10,6 +10,7 @@ import Cart from "./pages/Cart/Cart";
 import { Services } from "./pages/Services/Services";
 import Oferta from "./pages/Oferta/Oferta";
 import Detail from "./pages/Detail/Detail";
+import MyProducts from "./pages/Producto/MyProducts";
 
 function App() {
   // const state = useContext(GlobalState);
@@ -27,6 +28,7 @@ function App() {
           <Route path="/detail/:id" exact component={Detail} />
           <Route path="/cart" exact component={Cart} />
           <Route path="/ofertas" exact component={Oferta} />
+          <Route path="/myproducts" exact component={MyProducts} />
         </Switch>
       </Router>
     </DataProvider>

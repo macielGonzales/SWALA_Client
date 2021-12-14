@@ -24,6 +24,7 @@ const pagoController = {
             const newPago = new Pago({
                 usuario_id:_id, nombre, email, cart, pago_id, direccion
             })
+            
            await newPago.save()
             res.json({msg: "Pago exitoso"})
         } catch (err) {

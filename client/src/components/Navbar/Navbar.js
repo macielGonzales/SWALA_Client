@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import Logout from "@mui/icons-material/Logout";
+import Inventory2 from "@mui/icons-material/Inventory2"
 import axios from "axios";
 import "./NavBar.css";
 
@@ -194,6 +195,15 @@ function Navbar() {
                               vertical: "bottom",
                             }}
                           >
+
+                            <a href="/myproducts" >
+                              <MenuItem>
+                                <ListItemIcon>
+                                  <Inventory2 fontSize="small" />
+                                </ListItemIcon>
+                                Mis pedidos
+                              </MenuItem>
+                            </a>
                             <MenuItem onClick={handleLogoutUser}>
                               <ListItemIcon>
                                 <Logout fontSize="small" />
