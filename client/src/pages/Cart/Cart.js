@@ -118,7 +118,7 @@ const Cart = () => {
   };
 
   const removeProduct = (id) => {
-    if (window.confirm("Do you want to delete this product?")) {
+    if (window.confirm("¿ Esta seguro de querer eliminar este producto ?")) {
       cart.forEach((item, index) => {
         if (item._id === id) {
           cart.splice(index, 1);

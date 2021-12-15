@@ -1,4 +1,5 @@
 const usuario = require("../models/Usuario");
+const pago = require("../models/Pago");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -137,6 +138,15 @@ const usuarioController = {
       fechaEntrega: req.body.fechaEntrega
     })
   },
+
+  pedidos: async(req, res) => {
+    try {
+      const pedidos = await pago.find({usuario_id: req.user.id})
+      res.json(pedidos)
+    } catch (err) {
+      return res.status(500).json({msg: err.message})
+    }
+  }
 };
 
 

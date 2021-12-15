@@ -9,6 +9,7 @@ function UserApi(token) {
     const [isNameUserAvatar, setIsNameUserAvatar] = useState('')
     const [cart, setCart] = useState([])
     const [fechaEntrega, setFechaEntrega] = useState('')
+    const [pedidos, setPedidos] = useState([])
 
     useEffect(() => {
         if(token){
@@ -33,6 +34,17 @@ function UserApi(token) {
        
     }, [token])
 
+    useEffect(() => {
+        if(token){
+            const getPedidos = async() =>{
+                const res = await axios.get('/usuario/pedidos',{
+                    headers: {Autorizacion: token}
+                })
+                console.log(res)
+            }
+            getPedidos()
+        }
+    },[token])
     const addCart = async (product ) => {
         if(!isLogged) return alert("Porfavor inicie sesion para poder comprar")
 
