@@ -68,9 +68,9 @@ function Footer() {
           <div className="footer-logo">
             <Link to="/" className="social-logo logofooter">
               <a href="/">
-                <img
+                <img 
                   alt="ladlolalogo"
-                  src="https://res.cloudinary.com/dzsitpxzw/image/upload/v1634182321/swala/logo_white_large_c2nnmp.png"
+                  src="https://res.cloudinary.com/dr9mltwij/image/upload/v1639552830/LADLOLA/chico_logo_white_large_e4qwc5.png"
                 />
               </a>
             </Link>

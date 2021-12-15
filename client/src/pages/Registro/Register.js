@@ -39,7 +39,7 @@ export const Register = () => {
         </div>
         <div class="form-wrap-register">
           <h1>Registrar</h1>
-          <p>Hello friends We're Wavefire Coding. Let's get in touch</p>
+          <p>Bienvenido a la pasteleria "Los alfajores de la Lola"</p>
           <form onSubmit={handleRegisterSubmit} class="form-register">
             <br></br>
             <input

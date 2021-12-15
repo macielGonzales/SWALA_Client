@@ -46,17 +46,17 @@ function Head() {
                         </li>
                        <li className="nav-item">
                             <Link to="/services" className="nav-links" onClick={closeMobileMenu}>
-                                Services
+                                Servicios
                             </Link>
                         </li>
                        <li className="nav-item">
                             <Link to="/products" className="nav-links" onClick={closeMobileMenu}>
-                                Products
+                                Catalogo
                             </Link>
                         </li> 
                        <li className="nav-item">
                             <Link to="/cart" className="nav-links" onClick={closeMobileMenu}>
-                                Shopping Cart
+                                Carrito de compra
                             </Link>
                         </li> 
                         {/* <li>

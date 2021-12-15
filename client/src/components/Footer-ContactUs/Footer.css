@@ -28,6 +28,9 @@
     margin-bottom: 24px;
     font-size: 24px;
   }
+ .ash img {
+    max-width: 10%;
+    max-height: 10%;  }
   
   .footer-subscription-text {
     margin-bottom: 24px;
@@ -55,6 +58,7 @@
   .footer-link-wrapper {
     display: flex;
   }
+
   
   .footer-link-items {
     display: flex;

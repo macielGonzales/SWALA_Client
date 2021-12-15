@@ -166,7 +166,7 @@ const Cart = () => {
       <Navbar />
       <section className="section-pagetop bg">
         <div className="container">
-          <h2 className="title-page">Shopping cart</h2>
+          <h2 className="title-page">Carrito de compra</h2>
           <nav>
             <ol className="breadcrumb text-white">
               <li className="breadcrumb-item">
@@ -356,8 +356,8 @@ const Cart = () => {
 
                   <div className="alert alert-success mt-3">
                     <p className="icontext">
-                      <i className="icon text-success fa fa-truck"></i> Free
-                      Delivery within 1-2 weeks
+                      <i className="icon text-success fa fa-truck"></i> 
+                      Delivery gratis
                     </p>
                   </div>
                 </main>
@@ -366,16 +366,16 @@ const Cart = () => {
                     <div className="card-body">
                       <form>
                         <div className="form-group">
-                          <label>Have coupon?</label>
+                          <label>¿ Cupon de descuento ?</label>
                           <div className="input-group">
                             <input
                               type="text"
                               className="form-control"
                               name=""
-                              placeholder="Coupon code"
+                              placeholder="Codigo de cupon"
                             />
                             <span className="input-group-append">
-                              <button className="btn btn-primary">Apply</button>
+                              <button className="btn btn-primary">Añadir</button>
                             </span>
                           </div>
                         </div>
@@ -385,7 +385,7 @@ const Cart = () => {
                   <div className="card">
                     <div className="card-body">
                       <dl className="dlist-align">
-                        <dt>Total price:</dt>
+                        <dt>Precio total:</dt>
                         <dd className="text-right">s/. {total}</dd>
                       </dl>
                       <dl className="dlist-align">
