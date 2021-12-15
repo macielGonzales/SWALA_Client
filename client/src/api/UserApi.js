@@ -10,6 +10,7 @@ function UserApi(token) {
     const [cart, setCart] = useState([])
     const [fechaEntrega, setFechaEntrega] = useState('')
     const [pedidos, setPedidos] = useState([])
+    const [callback, setCallback] = useState(false)
 
     useEffect(() => {
         if(token){
@@ -40,11 +41,13 @@ function UserApi(token) {
                 const res = await axios.get('/usuario/pedidos',{
                     headers: {Autorizacion: token}
                 })
-                console.log(res)
+                console.log(res);
+                setPedidos(res.data);
             }
             getPedidos()
         }
-    },[token])
+    },[token,callback])
+
     const addCart = async (product ) => {
         if(!isLogged) return alert("Porfavor inicie sesion para poder comprar")
 
@@ -78,6 +81,8 @@ function UserApi(token) {
        fechaEntrega: [fechaEntrega, setFechaEntrega],
        addCart: addCart,
        addFechaEntrega: addFechaEntrega,
+       pedidos: [pedidos, setPedidos],
+       callback: [callback, setCallback]
     }
 }
 
