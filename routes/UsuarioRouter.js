@@ -9,6 +9,7 @@ router.get('/logout', usuarioController.logout)
 router.get('/refresh_token', usuarioController.refreshToken)
 router.get('/infor', auth, usuarioController.getUser)
 router.patch('/addCart', auth, usuarioController.addCart)
+router.patch('/addFechaEntrega', auth, usuarioController.addFechaEntrega)
 
 
 module.exports = router

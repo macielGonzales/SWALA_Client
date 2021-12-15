@@ -7,12 +7,73 @@ import { Link } from "react-router-dom";
 import "./Cart.css";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer-ContactUs/Footer";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+
+import PropTypes from "prop-types";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DateTimePicker from "@mui/lab/DateTimePicker";
+
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+}));
+
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
+
 
 const Cart = () => {
   const state = useContext(GlobalState);
   const [cart, setCart] = state.userApi.cart;
+  const [fechaEntrega, setFechaEntrega] = state.userApi.fechaEntrega;
   const [token] = state.token;
   const [total, setTotal] = useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(Date.now());
+  const addFechaEntrega = state.userApi.addFechaEntrega;
 
   useEffect(() => {
     const getTotal = () => {
@@ -75,7 +136,7 @@ const Cart = () => {
 
     await axios.post(
       "/api/pago",
-      { cart, pago_id, direccion },
+      { cart, pago_id, direccion, fechaEntrega },
       {
         headers: { Autorizacion: token },
       }
@@ -83,7 +144,21 @@ const Cart = () => {
 
     setCart([]);
     addCart([]);
+    setFechaEntrega();
+    addFechaEntrega();
     alert("Tu pedido ha sido realizado con exito");
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
   };
 
   return (
@@ -215,10 +290,62 @@ const Cart = () => {
                     </table>
 
                     <div className="card-body border-top">
-                      <a href="/#" className="btn btn-primary float-md-right">
-                        {" "}
-                        Make Purchase <i className="fa fa-chevron-right"></i>{" "}
-                      </a>
+                    <div>
+                        <Button
+                          variant="outlined"
+                          className="btn btn-primary float-md-right"
+                          onClick={handleClickOpen}
+                        >
+                          Entregaﾠ
+                          <AccessTimeFilledIcon />
+                        </Button>
+                        <BootstrapDialog
+                          onClose={handleClose}
+                          aria-labelledby="customized-dialog-title"
+                          open={open}
+                        >
+                          <BootstrapDialogTitle
+                            id="customized-dialog-title"
+                            onClose={handleClose}
+                          >
+                            Entrega del pedido
+                          </BootstrapDialogTitle>
+                          <DialogContent dividers>
+                            <Typography gutterBottom>
+                              <LocalizationProvider
+                                dateAdapter={AdapterDateFns}
+                              >
+                                <Stack spacing={3}>
+                              
+                                  <DateTimePicker
+                                    label="Dia y hora"
+                                    // inputFormat="dd/MM/yyyy"
+                                    value={value}
+                                    minDate={new Date()}
+                                    // minTime={}
+                                    // minTime={new Date('11:30 AM')}
+                                    inputFormat="dd/MM/yyyy hh:mm aa"  
+                                    onChange={handleChange}
+                                    renderInput={(params) => (
+                                      <TextField {...params} />
+                                    )}
+                                  />
+                                  
+                                </Stack>
+                              </LocalizationProvider>
+                            </Typography>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              autoFocus
+                              onClick={() => addFechaEntrega(value)}
+                            >
+                              Guardar
+                            </Button>
+
+                          </DialogActions>
+                        </BootstrapDialog>
+                      </div>
                       <a href="/products" className="btn btn-light">
                         {" "}
                         <i className="fa fa-chevron-left"></i> Continuar

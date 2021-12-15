@@ -18,11 +18,11 @@ const pagoController = {
             const usuario = await Usuario.findById(req.user.id).select('nombre email')
             if(!usuario) return res.status(400).json({msg: "Usuario no existe"})
 
-            const {cart, pago_id, direccion} = req.body;
+            const {cart, pago_id, direccion, fechaEntrega} = req.body;
             const {_id, nombre, email} = usuario
 
             const newPago = new Pago({
-                usuario_id:_id, nombre, email, cart, pago_id, direccion
+                usuario_id:_id, nombre, email, cart, pago_id, direccion, fechaEntrega
             })
             
            await newPago.save()

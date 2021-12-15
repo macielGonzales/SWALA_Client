@@ -130,8 +130,16 @@ const usuarioController = {
     } catch (err) {
       return res.status(500).json({msg: err.message})
     }
-  }
+  },
+  
+  addFechaEntrega: async(req, res) => {
+    await usuario.findOneAndUpdate({_id: req.user.id}, {
+      fechaEntrega: req.body.fechaEntrega
+    })
+  },
 };
+
+
 
 const createAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1d" });

@@ -23,7 +23,11 @@ const Usuario = new mongoose.Schema({
     cart:{
         type: Array,
         default: []
-    }
+    },
+    fechaEntrega: {
+        type: Date,
+        required: false
+    },
 
 }, {
     timestamps: true

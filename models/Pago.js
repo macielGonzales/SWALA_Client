@@ -30,6 +30,10 @@ const Pago = new mongoose.Schema({
         type:Array,
         default: []
     },
+    fechaEntrega: {
+        type: Date,
+        required: false
+    },
 
     status: {
         type:Boolean,

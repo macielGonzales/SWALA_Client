@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import moment from 'moment'
 
 function UserApi(token) {
     const [isLogged, setIsLogged] = useState(false)
@@ -7,6 +8,7 @@ function UserApi(token) {
     const [isNameUser, setIsNameUser] = useState('')
     const [isNameUserAvatar, setIsNameUserAvatar] = useState('')
     const [cart, setCart] = useState([])
+    const [fechaEntrega, setFechaEntrega] = useState('')
 
     useEffect(() => {
         if(token){
@@ -21,6 +23,7 @@ function UserApi(token) {
                     setIsNameUserAvatar(res.data.nombre.charAt(0))
 
                     setCart(res.data.cart)
+                    setFechaEntrega(res.data.fechaEntrega)
                 } catch (err) {
                     alert(err.response.data.msg)
                 }
@@ -48,13 +51,21 @@ function UserApi(token) {
         }
     }
 
+    const addFechaEntrega = async (fechaEntrega) => {
+        setFechaEntrega(moment(fechaEntrega).subtract(5,'h'))
+        await axios.patch('/usuario/addFechaEntrega', {fechaEntrega: fechaEntrega}, {headers: {Autorizacion: token}})
+        
+    }
+ 
     return {
        isLogged: [isLogged, setIsLogged],
        isAdmin: [isAdmin, setIsAdmin],
        isNameUser: [isNameUser, setIsNameUser],
        isNameUserAvatar: [isNameUserAvatar, setIsNameUserAvatar],
        cart: [cart, setCart],
+       fechaEntrega: [fechaEntrega, setFechaEntrega],
        addCart: addCart,
+       addFechaEntrega: addFechaEntrega,
     }
 }
 
