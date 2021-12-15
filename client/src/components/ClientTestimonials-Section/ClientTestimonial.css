@@ -1,5 +1,5 @@
 .cards-testimonials{
-    padding: 4rem;
+    padding: 2rem;
     background: #D7C1DB;
 }
 
@@ -11,14 +11,15 @@ h1 {
     display: flex;
     flex-flow: column;
     align-items: center;
-    max-width: 1120px;
-    width: 90%;
-    margin: 0 auto
+    max-width: 1000px;
+    width: 50%;
+    margin: 0 auto;
+    /* height: 50%; */
 }
 
 .cards__testimonial-wrapper{
     position: relative;
-    margin: 50px 0 45px;
+    margin: 50px 0 30px;
 }
 
 .cards__testimonials{

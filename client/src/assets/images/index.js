@@ -8,6 +8,7 @@ const images = {
     img7: require('../images/img-7.jpg').default,
     img8: require('../images/img-8.jpg').default,
     img9: require('../images/img-9.jpg').default,
+    icon10: require('../images/emptyData.ico').default,
 }
 
 export default images;

@@ -96,11 +96,11 @@ const DetailProduct = () => {
                       <span className="label-rating mr-3 text-muted">7/10</span>
                       <a href="/#" className="btn-link  mr-3 text-muted">
                         {" "}
-                        <i className="fa fa-heart"></i> Save for later{" "}
+                        <i className="fa fa-heart"></i> Añadir a favoritos{" "}
                       </a>
                       <a href="/#" className="btn-link text-muted">
                         {" "}
-                        <i className="fa fa-book-open"></i> Compare{" "}
+                        <i className="fa fa-book-open"></i> Comparar{" "}
                       </a>
                     </div>
 

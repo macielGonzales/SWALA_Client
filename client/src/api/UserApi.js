@@ -67,7 +67,8 @@ function UserApi(token) {
     }
 
     const addFechaEntrega = async (fechaEntrega) => {
-        setFechaEntrega(moment(fechaEntrega).subtract(5,'h'))
+        // setFechaEntrega(moment(fechaEntrega).subtract(5,'h'))
+        setFechaEntrega(fechaEntrega)
         await axios.patch('/usuario/addFechaEntrega', {fechaEntrega: fechaEntrega}, {headers: {Autorizacion: token}})
         
     }
