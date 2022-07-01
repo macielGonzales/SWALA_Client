@@ -1,4 +1,4 @@
-const Producto = require("../models/Producto");
+const Product = require("../models/Product");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -49,7 +49,7 @@ const productoController = {
   getProducto: async (req, res) => {
     try {
       console.log(req.query);
-      const features = new APIfeatures(Producto.find(), req.query).filtering().sorting().pagination()
+      const features = new APIfeatures(Product.find(), req.query).filtering().sorting().pagination()
       const producto = await features.query;
       res.json({
         status: 'success',

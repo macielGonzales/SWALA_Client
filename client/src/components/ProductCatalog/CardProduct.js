@@ -24,7 +24,7 @@ const CardProduct = ({ product }) => {
           <CardMedia
             component="img"
             height="194"
-            image={product.imagen.url}
+            image={product.images[0].url}
             alt="Paella dish"
           />
           <CardContent>

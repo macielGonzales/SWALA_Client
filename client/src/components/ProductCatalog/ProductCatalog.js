@@ -14,22 +14,31 @@ const ProductCatalog = () => {
   const state = useContext(GlobalState);
   //la siguiente linea comentada es importante
   const [products] = state.productsApi.products;
+  console.log("🚀 ~ file: ProductCatalog.js ~ line 17 ~ ProductCatalog ~ products", products)
   const [isLoading, setIsLoading] = useState(true);
   const [categories] = state.categoriesApi.categories;
   const [category, setCategory] = state.productsApi.category;
   const [sort, setSort] = state.productsApi.sort;
   const [search, setSearch] = state.productsApi.search;
-
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(function () {
-      setIsLoading(false);
-    }, 500);
-  }, []);
+  const status = 'habilitado'
+    useEffect(() => {
+      setIsLoading(true);
+      setTimeout(function () {
+        setIsLoading(false);
+      }, 500);
+    }, []);
 
   const handleCategory = e => {
     setCategory(e.target.value);
   };
+
+  const dataSource =
+    products.filter((c) => {
+        let field = c.estado
+        field = field.toLowerCase()
+        const query = status.toLowerCase()
+        return field.indexOf(query) !== -1
+      })
 
   return (
     <>
@@ -137,8 +146,7 @@ const ProductCatalog = () => {
                       >
                         <div className="card-body">
                           <Card
-                            sx={{ minWidth: 200 }}
-                            sx={{ bgcolor: orange[50] }}
+                            sx={{ minWidth: 200, bgcolor: orange[50] }}
                           >
                             <CardContent>
                               <Typography
@@ -301,7 +309,7 @@ const ProductCatalog = () => {
               <main className="col-md-9">
                 <header className="border-bottom mb-4 pb-3">
                   <div className="form-inline">
-                    <span className="mr-md-auto">{`${products.length} productos disponibles`}</span>
+                    <span className="mr-md-auto">{`${dataSource.length} productos disponibles`}</span>
                     <select
                       className="mr-2 form-control"
                       name="category"
@@ -343,7 +351,7 @@ const ProductCatalog = () => {
                 </header>
                 {/*products*/}
                 <div className="row">
-                  {products.map((product) => (
+                  {dataSource.map((product) => (
                     <div className="col-md-4">
                       <figure className="card card-product-grid">
                         <CardProduct key={product._id} product={product} />

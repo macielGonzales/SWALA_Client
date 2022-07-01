@@ -10,9 +10,12 @@ const ProductsApi = () => {
   const [result, setResult] = useState(0);
 
   const getProducto = async () => {
-    const res = await axios.get(`/api/producto?limit=${page*9}&${category}&${sort}&title[regex]=${search}`);
+    const res = await axios.get(`http://localhost:5000/api/producto?limit=${page * 9}&${category}&${sort}&title[regex]=${search}`);
     setProducts(res.data.producto);
+    console.log("🚀 ~ file: ProductsApi.js ~ line 15 ~ getProducto ~ res.data.producto", res.data.producto)
     setResult(res.data.result);
+    console.log("🚀 ~ file: ProductsApi.js ~ line 17 ~ getProducto ~ res.data.result", res.data.result)
+    console.log('resdata:', res.data)
   };
 
   useEffect(() => {

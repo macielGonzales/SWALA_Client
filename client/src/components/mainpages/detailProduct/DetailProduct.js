@@ -49,25 +49,25 @@ const DetailProduct = () => {
                     <div className="card img-big-wrap">
                       <a href="/#">
                         {" "}
-                        <img src={detailProduct.imagen.url} />
+                        <img src={detailProduct.images[0].url} />
                       </a>
                     </div>
                     <div className="thumbs-wrap">
                       <a href="/#" className="item-thumb">
                         {" "}
-                        <img src={detailProduct.imagen.url} />
+                        <img src={detailProduct.images[0].url} />
                       </a>
                       <a href="/#" className="item-thumb">
                         {" "}
-                        <img src={detailProduct.imagen.url} />
+                        <img src={detailProduct.images[0].url} />
                       </a>
                       <a href="/#" className="item-thumb">
                         {" "}
-                        <img src={detailProduct.imagen.url} />
+                        <img src={detailProduct.images[0].url} />
                       </a>
                       <a href="/#" className="item-thumb">
                         {" "}
-                        <img src={detailProduct.imagen.url} />
+                        <img src={detailProduct.images[0].url} />
                       </a>
                     </div>
                   </article>

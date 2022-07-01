@@ -8,7 +8,6 @@ import "./Cart.css";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer-ContactUs/Footer";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
@@ -24,7 +23,7 @@ import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateTimePicker from "@mui/lab/DateTimePicker";
-
+import DialogContentText from '@mui/material/DialogContentText';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -74,6 +73,9 @@ const Cart = () => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(Date.now());
   const addFechaEntrega = state.userApi.addFechaEntrega;
+  const [modalConfirm, setModalConfirm] = useState(false)
+  const [productName, setProductName] = useState(null)
+  const [id, setId] = useState(null)
 
   useEffect(() => {
     const getTotal = () => {
@@ -81,7 +83,7 @@ const Cart = () => {
         return prev + item.precio * item.quantity;
       }, 0);
 
-      console.log('total in eff',total)
+      console.log('total in eff', total)
       setTotal(total);
     };
 
@@ -118,17 +120,10 @@ const Cart = () => {
     addCart(cart);
   };
 
-  const removeProduct = (id) => {
-    if (window.confirm("¿ Esta seguro de querer eliminar este producto ?")) {
-      cart.forEach((item, index) => {
-        if (item._id === id) {
-          cart.splice(index, 1);
-        }
-      });
-
-      setCart([...cart]);
-      addCart(cart);
-    }
+  const removeProduct = (id, name) => {
+    setId(id)
+    setProductName(name)
+    setModalConfirm(true)
   };
 
   const tranSuccess = async (payment) => {
@@ -162,6 +157,22 @@ const Cart = () => {
     setValue(newValue);
   };
 
+  const handleCloseModal = () => {
+    setModalConfirm(false)
+  };
+
+  const handleDeleteProductCart = () => {
+    cart.forEach((item, index) => {
+      if (item._id === id) {
+        cart.splice(index, 1);
+      }
+    });
+
+    setCart([...cart]);
+    addCart(cart);
+    setModalConfirm(true)
+  }
+
   return (
     <>
       <Navbar />
@@ -186,8 +197,9 @@ const Cart = () => {
 
       {cart.length === 0 ? (
         <h2 style={{ textAlign: "center", fontSize: "4rem" }}>
-          {" "}
-          Carrito vacio{" "}
+          {" "}Carrito vacio{" "}
+          <br />
+          <a href="/products" className="btn btn-primary">Continuar comprando</a>
         </h2>
       ) : (
         <div>
@@ -218,7 +230,7 @@ const Cart = () => {
                               <figure className="itemside">
                                 <div className="aside">
                                   <img
-                                    src={product.imagen.url}
+                                    src={product.images[0].url}
                                     className="img-sm"
                                   />
                                 </div>
@@ -280,7 +292,7 @@ const Cart = () => {
                               </a>
                               <div
                                 className="btn btn-light btn-round"
-                                onClick={() => removeProduct(product._id)}
+                                onClick={() => removeProduct(product._id, product.nombre)}
                               >
                                 <i class="fas fa-trash"></i>
                               </div>
@@ -291,7 +303,7 @@ const Cart = () => {
                     </table>
 
                     <div className="card-body border-top">
-                    <div>
+                      <div>
                         <Button
                           variant="outlined"
                           className="btn btn-primary float-md-right"
@@ -317,7 +329,7 @@ const Cart = () => {
                                 dateAdapter={AdapterDateFns}
                               >
                                 <Stack spacing={3}>
-                              
+
                                   <DateTimePicker
                                     label="Dia y hora"
                                     // inputFormat="dd/MM/yyyy"
@@ -325,13 +337,13 @@ const Cart = () => {
                                     minDate={new Date()}
                                     // minTime={}
                                     // minTime={new Date('11:30 AM')}
-                                    inputFormat="dd/MM/yyyy hh:mm aa"  
+                                    inputFormat="dd/MM/yyyy hh:mm aa"
                                     onChange={handleChange}
                                     renderInput={(params) => (
                                       <TextField {...params} />
                                     )}
                                   />
-                                  
+
                                 </Stack>
                               </LocalizationProvider>
                             </Typography>
@@ -357,7 +369,7 @@ const Cart = () => {
 
                   <div className="alert alert-success mt-3">
                     <p className="icontext">
-                      <i className="icon text-success fa fa-truck"></i> 
+                      <i className="icon text-success fa fa-truck"></i>
                       Delivery gratis
                     </p>
                   </div>
@@ -394,6 +406,10 @@ const Cart = () => {
                         <dd className="text-right">s/. 0</dd>
                       </dl>
                       <dl className="dlist-align">
+                        <dt>IGV:</dt>
+                        <dd className="text-right">Incluido en el precio total</dd>
+                      </dl>
+                      <dl className="dlist-align">
                         <dt>Total:</dt>
                         <dd className="text-right  h5">
                           <strong>s/. {total}</strong>
@@ -402,7 +418,7 @@ const Cart = () => {
                       <hr />
                       <p className="text-center mb-3">
                         {
-                          <PaypalButton total={(total/4)} tranSuccess={tranSuccess} />
+                          <PaypalButton total={(total / 4)} tranSuccess={tranSuccess} />
                         }
                       </p>
                     </div>
@@ -411,7 +427,27 @@ const Cart = () => {
               </div>
             </div>
           </section>
+          <Dialog
+            open={modalConfirm}
+            onClose={handleCloseModal}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Eliminar producto del carrito"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                {`¿Esta seguro que desea eliminar  el producto`} {' '}<strong>{`${productName}`}</strong>{'?'}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseModal}>No</Button>
+              <Button onClick={handleDeleteProductCart} >Si, eliminar</Button>
+            </DialogActions>
+          </Dialog>
         </div>
+
       )}
       <Footer />
     </>

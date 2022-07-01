@@ -1,6 +1,6 @@
 const Pago = require('../models/Pago')
 const Usuario = require('../models/Usuario')
-const Producto = require('../models/Producto')
+const Product = require('../models/Product')
 
 
 const pagoController = {
