@@ -41,7 +41,6 @@ function UserApi(token) {
                 const res = await axios.get('/usuario/pedidos', {
                     headers: { Autorizacion: token }
                 })
-                console.log(res);
                 setPedidos(res.data);
             }
             getPedidos()
@@ -49,7 +48,7 @@ function UserApi(token) {
     }, [token, callback])
 
     const addCart = async (product) => {
-        if(!isLogged) return alert("Porfavor inicie sesion para poder comprar")
+        if (!isLogged) return alert("Porfavor inicie sesion para poder comprar")
 
 
         const check = cart.every(item => {

@@ -9,28 +9,28 @@ const pagoController = {
             const pago = await Pago.find()
             res.json(pago)
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(500).json({ msg: err.message })
         }
     },
 
-    crearPago: async (req,res) => {
+    crearPago: async (req, res) => {
         try {
             const usuario = await Usuario.findById(req.user.id).select('nombre email')
-            if(!usuario) return res.status(400).json({msg: "Usuario no existe"})
+            if (!usuario) return res.status(400).json({ msg: "Usuario no existe" })
 
-            const {cart, pago_id, direccion, fechaEntrega} = req.body;
-            const {_id, nombre, email} = usuario
+            const { cart, pago_id, direccion, fechaEntrega, pagoTotal } = req.body;
+            const { _id, nombre, email } = usuario
 
             const newPago = new Pago({
-                usuario_id:_id, nombre, email, cart, pago_id, direccion, fechaEntrega
+                usuario_id: _id, nombre, email, cart, pago_id, direccion, fechaEntrega, estado: 'Pendiente', pagoTotal
             })
-            
-           await newPago.save()
-            res.json({msg: "Pago exitoso"})
+
+            await newPago.save()
+            res.json({ msg: "Pago exitoso" })
         } catch (err) {
-            return res.status(500).json({msg: err.message})
+            return res.status(500).json({ msg: err.message })
         }
     }
-} 
+}
 
 module.exports = pagoController

@@ -24,6 +24,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import DialogContentText from '@mui/material/DialogContentText';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -76,6 +78,8 @@ const Cart = () => {
   const [modalConfirm, setModalConfirm] = useState(false)
   const [productName, setProductName] = useState(null)
   const [id, setId] = useState(null)
+  const [open2, setOpen2] = useState(true);
+
 
   useEffect(() => {
     const getTotal = () => {
@@ -83,7 +87,6 @@ const Cart = () => {
         return prev + item.precio * item.quantity;
       }, 0);
 
-      console.log('total in eff', total)
       setTotal(total);
     };
 
@@ -132,7 +135,7 @@ const Cart = () => {
 
     await axios.post(
       "/api/pago",
-      { cart, pago_id, direccion, fechaEntrega },
+      { cart, pago_id, direccion, fechaEntrega, pagoTotal: total },
       {
         headers: { Autorizacion: token },
       }
@@ -142,6 +145,8 @@ const Cart = () => {
     addCart([]);
     setFechaEntrega();
     addFechaEntrega();
+
+    //setOpen2(true);
     alert("Tu pedido ha sido realizado con exito");
   };
 
@@ -172,6 +177,14 @@ const Cart = () => {
     addCart(cart);
     setModalConfirm(true)
   }
+
+  const handleClose2 = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen2(false);
+  };
 
   return (
     <>
@@ -272,10 +285,10 @@ const Cart = () => {
                             <td>
                               <div className="price-wrap">
                                 <var className="price">
-                                  s/. {product.precio * product.quantity}
+                                  S/.{(product.precio).toString().indexOf('.') == -1 ? (product.precio) * (product.quantity) + ".00" : product.precio * product.quantity}
                                 </var>
                                 <small className="text-muted">
-                                  s/. {product.precio} cada uno{" "}
+                                  S/.{(product.precio).toString().indexOf('.') == -1 ? (product.precio) + ".00" : product.precio} cada uno {" "}
                                 </small>
                               </div>
                             </td>
@@ -399,11 +412,14 @@ const Cart = () => {
                     <div className="card-body">
                       <dl className="dlist-align">
                         <dt>Precio total:</dt>
-                        <dd className="text-right">s/. {total}</dd>
+                        {/* <dd className="text-right">s/. {total}</dd> */}
+                        <dd className="text-right">
+                          S/.{(total).toString().indexOf('.') == -1 ? `${total}.00` : total}
+                        </dd>
                       </dl>
                       <dl className="dlist-align">
                         <dt>Descuento:</dt>
-                        <dd className="text-right">s/. 0</dd>
+                        <dd className="text-right">s/. 0.00</dd>
                       </dl>
                       <dl className="dlist-align">
                         <dt>IGV:</dt>
@@ -411,14 +427,18 @@ const Cart = () => {
                       </dl>
                       <dl className="dlist-align">
                         <dt>Total:</dt>
-                        <dd className="text-right  h5">
+                        {/* <dd className="text-right  h5">
                           <strong>s/. {total}</strong>
+                        </dd> */}
+                        <dd className="text-right  h5">
+                          <strong>S/.{(total).toString().indexOf('.') == -1 ? `${total}.00` : total}</strong>
+
                         </dd>
                       </dl>
                       <hr />
                       <p className="text-center mb-3">
                         {
-                          <PaypalButton total={(total / 4)} tranSuccess={tranSuccess} />
+                          <PaypalButton total={Math.round(total / 3.9)} tranSuccess={tranSuccess} />
                         }
                       </p>
                     </div>
@@ -446,6 +466,13 @@ const Cart = () => {
               <Button onClick={handleDeleteProductCart} >Si, eliminar</Button>
             </DialogActions>
           </Dialog>
+          <Stack spacing={2} sx={{ width: '100%' }}>
+            <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+              <Alert onClose={handleClose2} severity="success" sx={{ width: '100%' }}>
+                Tu pedido ha sido realizado con exito
+              </Alert>
+            </Snackbar>
+          </Stack>
         </div>
 
       )}

@@ -16,7 +16,6 @@ const DetailProduct = () => {
       });
     }
   }, [params.id, products]);
-  console.log(detailProduct);
   if (detailProduct.length === 0) return null;
 
   return (
@@ -121,57 +120,15 @@ const DetailProduct = () => {
                     <br />
                     <br />
 
-
-                    {/* <div className="form-group">
-                      <label className="text-muted">Available sizes</label>
-                      <div>
-                        <label className="js-check btn btn-check active mr-1">
-                          <input
-                            type="radio"
-                            name="option_size"
-                            value="option1"
-                            checked=""
-                          />
-                          <span>Small</span>
-                        </label>
-                        <label className="js-check btn btn-check mr-1">
-                          <input
-                            type="radio"
-                            name="option_size"
-                            value="option1"
-                          />
-                          <span>Medium</span>
-                        </label>
-                        <label className="js-check btn btn-check mr-1">
-                          <input
-                            type="radio"
-                            name="option_size"
-                            value="option1"
-                          />
-                          <span>Large</span>
-                        </label>
-                        <label className="js-check btn btn-check disabled">
-                          <input
-                            type="radio"
-                            name="option_size"
-                            disabled=""
-                            value="option1"
-                          />
-                          <span>Babies</span>
-                        </label>
-                      </div>
-                    </div> */}
-
                     <div className="mb-3">
                       <span className="monthly">
                         Precio
-                        {/* <a href="#" className="btn-link">
-                            installment{" "}
-                          </a> */}
                       </span>
                       <br />
-                      <var className="price h4">s/. {detailProduct.precio}</var>{" "}
-                      
+                      <var className="price h4">
+                        S/.{(detailProduct.precio).toString().indexOf('.') == -1 ? `${detailProduct.precio}.00` : detailProduct.precio}
+                      </var>
+
                     </div>
 
                     <div className="mb-4">

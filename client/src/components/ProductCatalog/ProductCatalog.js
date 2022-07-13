@@ -14,19 +14,18 @@ const ProductCatalog = () => {
   const state = useContext(GlobalState);
   //la siguiente linea comentada es importante
   const [products] = state.productsApi.products;
-  console.log("🚀 ~ file: ProductCatalog.js ~ line 17 ~ ProductCatalog ~ products", products)
   const [isLoading, setIsLoading] = useState(true);
   const [categories] = state.categoriesApi.categories;
   const [category, setCategory] = state.productsApi.category;
   const [sort, setSort] = state.productsApi.sort;
   const [search, setSearch] = state.productsApi.search;
   const status = 'habilitado'
-    useEffect(() => {
-      setIsLoading(true);
-      setTimeout(function () {
-        setIsLoading(false);
-      }, 500);
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(function () {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   const handleCategory = e => {
     setCategory(e.target.value);
@@ -34,11 +33,12 @@ const ProductCatalog = () => {
 
   const dataSource =
     products.filter((c) => {
-        let field = c.estado
-        field = field.toLowerCase()
-        const query = status.toLowerCase()
-        return field.indexOf(query) !== -1
-      })
+      let field = c.estado
+      field = field.toLowerCase()
+      const query = status.toLowerCase()
+      return field.indexOf(query) !== -1
+    })
+  console.log("🚀 ~ file: ProductCatalog.js ~ line 35 ~ ProductCatalog ~ dataSource", dataSource)
 
   return (
     <>
@@ -174,82 +174,6 @@ const ProductCatalog = () => {
                     </Link>
                   </article>
 
-                  {/*
-								<article class="filter-group">
-									<header class="card-header">
-										<a
-											href="#"
-											data-toggle="collapse"
-											data-target="#collapse_2"
-											aria-expanded="true"
-											class=""
-										>
-											<i class="icon-control fa fa-chevron-down" />
-											<h6 class="title">Brands </h6>
-										</a>
-									</header>
-									<div class="filter-content collapse show" id="collapse_4">
-										<div class="card-body">
-											<label class="checkbox-btn">
-												<input type="checkbox" />
-												<span class="btn btn-light"> XS </span>
-											</label>
-											<label class="checkbox-btn">
-												<input type="checkbox" />
-												<span class="btn btn-light"> SM </span>
-											</label>
-											<label class="checkbox-btn">
-												<input type="checkbox" />
-												<span class="btn btn-light"> LG </span>
-											</label>
-											<label class="checkbox-btn">
-												<input type="checkbox" />
-												<span class="btn btn-light"> XXL </span>
-											</label>
-										</div>
-									</div>
-									<div class="filter-content collapse show" id="collapse_2">
-										<div class="card-body">
-											<label class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" />
-												<div class="custom-control-label">
-													Mercedes
-													<b class="badge badge-pill badge-light float-right">120</b>{' '}
-												</div>
-											</label>
-											<label class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" />
-												<div class="custom-control-label">
-													Toyota
-													<b class="badge badge-pill badge-light float-right">15</b>{' '}
-												</div>
-											</label>
-											<label class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" />
-												<div class="custom-control-label">
-													Mitsubishi
-													<b class="badge badge-pill badge-light float-right">35</b>{' '}
-												</div>
-											</label>
-											<label class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" />
-												<div class="custom-control-label">
-													Nissan
-													<b class="badge badge-pill badge-light float-right">89</b>{' '}
-												</div>
-											</label>
-											<label class="custom-control custom-checkbox">
-												<input type="checkbox" class="custom-control-input" />
-												<div class="custom-control-label">
-													Honda
-													<b class="badge badge-pill badge-light float-right">30</b>{' '}
-												</div>
-											</label>
-										</div>
-									</div>
-								</article>	
-*/}
-
                   {/*mas filtros  */}
                   <article className="filter-group">
                     <header className="card-header">
@@ -325,9 +249,6 @@ const ProductCatalog = () => {
                           {category.nombre}
                         </option>
                       ))}
-                      {/* <option>Alfajores</option>
-                      <option>Brownies</option>
-                      <option>Tortas</option> */}
                     </select>
                     <div className="btn-group">
                       <a

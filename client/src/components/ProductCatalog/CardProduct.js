@@ -33,7 +33,9 @@ const CardProduct = ({ product }) => {
               <br />
               {product.descripcion}
               <br />
-              s/.<strong>{product.precio}</strong>
+              <strong>
+                S/.{(product.precio).toString().indexOf('.') == -1 ? `${product.precio}.00` : product.precio}
+              </strong>
             </Typography>
           </CardContent>
           <CardActions disableSpacing>

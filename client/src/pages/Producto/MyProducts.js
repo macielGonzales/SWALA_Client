@@ -19,6 +19,29 @@ const Products = () => {
   const state = useContext(GlobalState);
   const [pedidos] = state.userApi.pedidos;
 
+
+  let arrPrecio = []
+
+  pedidos.map((pedido, index) => {
+    //console.log("🚀 ~ file: MyProducts.js ~ line 32 ~ pedidos.map ~ pedido", pedido)
+    console.log("🚀 ~ file: MyProducts.js ~ line 32 ~ pedidos.map ~ pedido.cart:", pedido.cart)
+    let precio = pedido.cart[0].precio * pedido.cart[0].quantity
+    console.log("🚀 ~ file: MyProducts.js ~ line 28 ~ pedidos.map ~ precio", precio)
+
+    pedido.cart.map((cart, index) => {
+      // console.log("🚀 ~ file: MyProducts.js ~ line 28 ~ pedido.cart.map ~ index", index)
+      //console.log("🚀 ~ file: MyProducts.js ~ line 29 ~ pedido.cart[index].map ~ cart", cart)
+    })
+  })
+
+  arrPrecio.map((precio, inde) => {
+
+    pedidos.map((value, index) => {
+
+    })
+
+  })
+
   return (
     <>
       <Navbar />
@@ -42,10 +65,10 @@ const Products = () => {
                         N° Pedido
                       </th>
                       <th scope="col" width="130">
-                        Cantidad
+                        Cantidad(unidad)
                       </th>
                       <th scope="col" width="130">
-                        Precio total
+                        Precio total(S/.)
                       </th>
                       <th scope="col" width="130">
                         Fecha de envio
@@ -54,128 +77,117 @@ const Products = () => {
                         Direccion
                       </th>
                       <th scope="col" width="130">
+                        Estado
+                      </th>
+                      <th scope="col" width="130">
                         Accion
                       </th>
                     </tr>
                   </thead>
-                  {pedidos.length > 0 ? (
-                    pedidos.map((pedido, index) => (
-                      <tbody>
-                        <tr key={index}>
-                          <td>
-                            {/* <figure className="itemside">
-                              <div className="aside">
-                                <img
-                                  src={pedido.cart[0].imagen.url}
-                                  className="img-sm"
-                                />
-                              </div>
-                              <figcaption className="info">
-                                <Link
-                                  to={`/detail/${pedido._id}`}
-                                  className="title text-dark"
+                  {
+                    pedidos.length > 0
+                      ?
+                      (
+                        <>
+                          {
+                            pedidos.map((pedido, index) => (
+                              <tbody>
+                                <tr key={index}>
+                                  <td>
+                                    #{(index += 1)}
+                                  </td>
+                                  <td>
+                                    <div>
+                                      <span>{pedido.cart.length}</span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="price-wrap">
+                                      <var className="price">
+                                        S/.{pedido.pagoTotal}
+                                        {/* S/.{(pedido.cart[0].precio).toString().indexOf('.') == -1 ? ((pedido.cart[0].precio * pedido.cart[0].quantity) + '.00') : pedido.cart[0].precio * pedido.cart[0].quantity} */}
+                                      </var>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="price-wrap">
+                                      <span>
+                                        {moment(pedido.fechaEntrega).format(
+                                          "DD/MM/yyyy - hh:mm a"
+                                        )}
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="price-wrap">
+                                      <p className="text-muted small">
+                                        <span>{pedido.direccion.line1}</span>
+                                        { }-{ }
+                                        <span>{pedido.direccion.line2}</span>
+                                      </p>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="price-wrap">
+                                      <p className="text-muted small">
+                                        <span>{pedido.estado}</span>
+                                      </p>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <Box
+                                      sx={{
+                                        "& button": { m: 1 },
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexDirection: "column",
+                                      }}
+                                    >
+                                      <div>
+                                        <IconButton size="large">
+                                          <Icon color="primary">visibility</Icon>
+                                        </IconButton>
+                                      </div>
+                                    </Box>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            ))
+                          }
+                        </>
+                      )
+                      :
+                      (
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div alignItems="center">
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    flexDirection: "column",
+                                    p: 5,
+                                  }}
                                 >
-                                  {" "}
-                                  {pedido.cart[0].nombre}
-                                </Link>
-                                <p className="text-muted small">
-                                  {pedido.cart[0].descripcion}
-                                </p>
-                              </figcaption>
-                            </figure> */}
-                            {(index += 1)}
-                          </td>
-                          <td>
-                            <div>
-                              <div className="btn btn-light"></div>
-                              <span>{pedido.cart.length}</span>
-                              <div className="btn btn-light mr-2"></div>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="price-wrap">
-                              <var className="price">
-                                s/.{" "}
-                                {pedido.cart[0].precio *
-                                  pedido.cart[0].quantity}
-                              </var>
-                              {/* <small className="text-muted">
-                                s/. {pedido.precio} cada uno{" "}
-                              </small> */}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="price-wrap">
-                              <span>
-                                {/* {format(
-                                      new Date(pedido.fechaEntrega),
-                                      'dd/MM/yyyy h/m'
-                                    )} */}
-                                {moment(pedido.fechaEntrega).format(
-                                  "DD/MM/yyyy - hh:mm a"
-                                )}
-                              </span>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="price-wrap">
-                              <p className="text-muted small">
-                                <span>{pedido.direccion.line1}</span>
-                                {}-{}
-                                <span>{pedido.direccion.line2}</span>
-                              </p>
-                            </div>
-                          </td>
-                          <td>
-                            <Box
-                              sx={{
-                                "& button": { m: 1 },
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                              }}
-                            >
-                              <div>
-                                <IconButton size="large">
-                                  <Icon color="primary">visibility</Icon>
-                                </IconButton>
-                              </div>
-                            </Box>
-                          </td>
-                        </tr>
-                      </tbody>
-                    ))
-                  ) : (
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div alignItems="center">
-                            <Box
-                              component="span"
-                              sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                                p: 5,
-                                // border: "1px dashed grey",
-                              }}
-                            >
-                              <div className="aish">
-                                <img src={foto} sizes=" 100px, 20px" />
-                              </div>
+                                  <div className="aish">
+                                    <img src={foto} sizes=" 100px, 20px" />
+                                  </div>
 
-                              <Typography color="GrayText" variant="subtitle1">
-                                {" "}
-                                No tiene ningun pedido{" "}
-                              </Typography>
-                            </Box>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  )}
+                                  <Typography color="GrayText" variant="subtitle1">
+                                    {" "}
+                                    No tiene ningun pedido{" "}
+                                  </Typography>
+                                </Box>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      )
+                  }
                 </table>
 
                 <div className="card-body border-top">
